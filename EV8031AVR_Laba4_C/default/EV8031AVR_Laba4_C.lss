@@ -1,0 +1,207 @@
+
+EV8031AVR_Laba4_C.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000000bc  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .debug_aranges 00000020  00000000  00000000  00000110  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  2 .debug_pubnames 0000001b  00000000  00000000  00000130  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_info   000002a7  00000000  00000000  0000014b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_abbrev 0000012a  00000000  00000000  000003f2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_line   000001e8  00000000  00000000  0000051c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_frame  00000020  00000000  00000000  00000704  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_str    000000de  00000000  00000000  00000724  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_loc    000000d3  00000000  00000000  00000802  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_ranges 00000090  00000000  00000000  000008d5  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	17 c0       	rjmp	.+46     	; 0x32 <__bad_interrupt>
+   4:	16 c0       	rjmp	.+44     	; 0x32 <__bad_interrupt>
+   6:	15 c0       	rjmp	.+42     	; 0x32 <__bad_interrupt>
+   8:	14 c0       	rjmp	.+40     	; 0x32 <__bad_interrupt>
+   a:	13 c0       	rjmp	.+38     	; 0x32 <__bad_interrupt>
+   c:	12 c0       	rjmp	.+36     	; 0x32 <__bad_interrupt>
+   e:	11 c0       	rjmp	.+34     	; 0x32 <__bad_interrupt>
+  10:	10 c0       	rjmp	.+32     	; 0x32 <__bad_interrupt>
+  12:	0f c0       	rjmp	.+30     	; 0x32 <__bad_interrupt>
+  14:	0e c0       	rjmp	.+28     	; 0x32 <__bad_interrupt>
+  16:	0d c0       	rjmp	.+26     	; 0x32 <__bad_interrupt>
+  18:	0c c0       	rjmp	.+24     	; 0x32 <__bad_interrupt>
+  1a:	0b c0       	rjmp	.+22     	; 0x32 <__bad_interrupt>
+  1c:	0a c0       	rjmp	.+20     	; 0x32 <__bad_interrupt>
+  1e:	09 c0       	rjmp	.+18     	; 0x32 <__bad_interrupt>
+  20:	08 c0       	rjmp	.+16     	; 0x32 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+  2e:	02 d0       	rcall	.+4      	; 0x34 <main>
+  30:	43 c0       	rjmp	.+134    	; 0xb8 <_exit>
+
+00000032 <__bad_interrupt>:
+  32:	e6 cf       	rjmp	.-52     	; 0x0 <__vectors>
+
+00000034 <main>:
+#define lcd_data 0x8005
+
+int main (void) {
+//????????? ????????????? ????????????
+//?????????? ?????? ?? ?????????? ???'???? (????????? ?? ?????????? ??????????)
+ MCUCR = 1 << SRE;
+  34:	80 e8       	ldi	r24, 0x80	; 128
+  36:	85 bf       	out	0x35, r24	; 53
+//??????????? ???????? ??????????? ???????????
+ACSR = 1 << ACD;
+  38:	88 b9       	out	0x08, r24	; 8
+  3a:	80 e1       	ldi	r24, 0x10	; 16
+  3c:	97 e2       	ldi	r25, 0x27	; 39
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  3e:	28 eb       	ldi	r18, 0xB8	; 184
+  40:	30 e0       	ldi	r19, 0x00	; 0
+  42:	f9 01       	movw	r30, r18
+  44:	31 97       	sbiw	r30, 0x01	; 1
+  46:	f1 f7       	brne	.-4      	; 0x44 <__SREG__+0x5>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  48:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  4a:	d9 f7       	brne	.-10     	; 0x42 <__SREG__+0x3>
+
+	unsigned char first_letter = 0x61; //??????? ?????? ?????? ? ????????
+
+	_delay_ms (1000); 
+//????????? ????????????? ???
+	*c = 0x38; //Function Set
+  4c:	88 e3       	ldi	r24, 0x38	; 56
+  4e:	80 93 04 80 	sts	0x8004, r24
+  52:	20 e0       	ldi	r18, 0x00	; 0
+  54:	38 e4       	ldi	r19, 0x48	; 72
+  56:	c9 01       	movw	r24, r18
+  58:	01 97       	sbiw	r24, 0x01	; 1
+  5a:	f1 f7       	brne	.-4      	; 0x58 <__SREG__+0x19>
+	_delay_ms (10); //?????????? ???????? ?? 10 ??
+
+
+	*c = 0x0E; //Display ON/OFF Control
+  5c:	8e e0       	ldi	r24, 0x0E	; 14
+  5e:	80 93 04 80 	sts	0x8004, r24
+  62:	c9 01       	movw	r24, r18
+  64:	01 97       	sbiw	r24, 0x01	; 1
+  66:	f1 f7       	brne	.-4      	; 0x64 <__SREG__+0x25>
+	_delay_ms (10); 
+
+	*c = 0x01; //Display clear first position first row
+  68:	81 e0       	ldi	r24, 0x01	; 1
+  6a:	80 93 04 80 	sts	0x8004, r24
+  6e:	c9 01       	movw	r24, r18
+  70:	01 97       	sbiw	r24, 0x01	; 1
+  72:	f1 f7       	brne	.-4      	; 0x70 <__SREG__+0x31>
+	_delay_ms (10); 
+
+	*c = 0x06; //Entry Mode Set
+  74:	86 e0       	ldi	r24, 0x06	; 6
+  76:	80 93 04 80 	sts	0x8004, r24
+  7a:	c9 01       	movw	r24, r18
+  7c:	01 97       	sbiw	r24, 0x01	; 1
+  7e:	f1 f7       	brne	.-4      	; 0x7c <__SREG__+0x3d>
+  80:	21 e6       	ldi	r18, 0x61	; 97
+	_delay_ms (10); 
+
+//????????? ???? ??? ??????????? ???? ??? ????????? ????? ????????
+	
+	for (; first_letter < 0x7B; first_letter++) {
+		*d = first_letter; //??????? ??????, ???????????
+  82:	48 eb       	ldi	r20, 0xB8	; 184
+  84:	50 e0       	ldi	r21, 0x00	; 0
+  86:	20 93 05 80 	sts	0x8005, r18
+  8a:	80 ed       	ldi	r24, 0xD0	; 208
+  8c:	97 e0       	ldi	r25, 0x07	; 7
+  8e:	fa 01       	movw	r30, r20
+  90:	31 97       	sbiw	r30, 0x01	; 1
+  92:	f1 f7       	brne	.-4      	; 0x90 <__SREG__+0x51>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  94:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  96:	d9 f7       	brne	.-10     	; 0x8e <__SREG__+0x4f>
+	*c = 0x06; //Entry Mode Set
+	_delay_ms (10); 
+
+//????????? ???? ??? ??????????? ???? ??? ????????? ????? ????????
+	
+	for (; first_letter < 0x7B; first_letter++) {
+  98:	2f 5f       	subi	r18, 0xFF	; 255
+  9a:	2b 37       	cpi	r18, 0x7B	; 123
+  9c:	a1 f7       	brne	.-24     	; 0x86 <__SREG__+0x47>
+		*d = first_letter; //??????? ??????, ???????????
+		_delay_ms(200); //???????? ?? 200 ??
+	}
+
+	while (1) { 
+		*c = 0x18; //Display Shift
+  9e:	48 e1       	ldi	r20, 0x18	; 24
+  a0:	28 eb       	ldi	r18, 0xB8	; 184
+  a2:	30 e0       	ldi	r19, 0x00	; 0
+  a4:	40 93 04 80 	sts	0x8004, r20
+  a8:	80 e1       	ldi	r24, 0x10	; 16
+  aa:	97 e2       	ldi	r25, 0x27	; 39
+  ac:	f9 01       	movw	r30, r18
+  ae:	31 97       	sbiw	r30, 0x01	; 1
+  b0:	f1 f7       	brne	.-4      	; 0xae <__SREG__+0x6f>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+  b2:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+  b4:	d9 f7       	brne	.-10     	; 0xac <__SREG__+0x6d>
+  b6:	f6 cf       	rjmp	.-20     	; 0xa4 <__SREG__+0x65>
+
+000000b8 <_exit>:
+  b8:	f8 94       	cli
+
+000000ba <__stop_program>:
+  ba:	ff cf       	rjmp	.-2      	; 0xba <__stop_program>

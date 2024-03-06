@@ -1,0 +1,420 @@
+
+EV8031AVR_Laba5_C.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000001e8  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000004  00800060  000001e8  0000025c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .debug_aranges 00000020  00000000  00000000  00000260  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  3 .debug_pubnames 00000072  00000000  00000000  00000280  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_info   00000339  00000000  00000000  000002f2  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_abbrev 0000012f  00000000  00000000  0000062b  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_line   0000032f  00000000  00000000  0000075a  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_frame  00000040  00000000  00000000  00000a8c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_str    0000011a  00000000  00000000  00000acc  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_loc    00000128  00000000  00000000  00000be6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_ranges 00000090  00000000  00000000  00000d0e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	23 c0       	rjmp	.+70     	; 0x4a <__vector_1>
+   4:	31 c0       	rjmp	.+98     	; 0x68 <__vector_2>
+   6:	20 c0       	rjmp	.+64     	; 0x48 <__bad_interrupt>
+   8:	1f c0       	rjmp	.+62     	; 0x48 <__bad_interrupt>
+   a:	1e c0       	rjmp	.+60     	; 0x48 <__bad_interrupt>
+   c:	1d c0       	rjmp	.+58     	; 0x48 <__bad_interrupt>
+   e:	1c c0       	rjmp	.+56     	; 0x48 <__bad_interrupt>
+  10:	1b c0       	rjmp	.+54     	; 0x48 <__bad_interrupt>
+  12:	1a c0       	rjmp	.+52     	; 0x48 <__bad_interrupt>
+  14:	19 c0       	rjmp	.+50     	; 0x48 <__bad_interrupt>
+  16:	18 c0       	rjmp	.+48     	; 0x48 <__bad_interrupt>
+  18:	17 c0       	rjmp	.+46     	; 0x48 <__bad_interrupt>
+  1a:	16 c0       	rjmp	.+44     	; 0x48 <__bad_interrupt>
+  1c:	15 c0       	rjmp	.+42     	; 0x48 <__bad_interrupt>
+  1e:	14 c0       	rjmp	.+40     	; 0x48 <__bad_interrupt>
+  20:	13 c0       	rjmp	.+38     	; 0x48 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e8 ee       	ldi	r30, 0xE8	; 232
+  36:	f1 e0       	ldi	r31, 0x01	; 1
+  38:	02 c0       	rjmp	.+4      	; 0x3e <.do_copy_data_start>
+
+0000003a <.do_copy_data_loop>:
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+
+0000003e <.do_copy_data_start>:
+  3e:	a4 36       	cpi	r26, 0x64	; 100
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <.do_copy_data_loop>
+  44:	1d d0       	rcall	.+58     	; 0x80 <main>
+  46:	ce c0       	rjmp	.+412    	; 0x1e4 <_exit>
+
+00000048 <__bad_interrupt>:
+  48:	db cf       	rjmp	.-74     	; 0x0 <__vectors>
+
+0000004a <__vector_1>:
+volatile unsigned char second_num = 0x30; 
+volatile unsigned char third_num = 0x30; 
+ 
+
+//??????????? IRQ0 (?? ????? INT0)
+  ISR(INT0_vect){
+  4a:	1f 92       	push	r1
+  4c:	0f 92       	push	r0
+  4e:	0f b6       	in	r0, 0x3f	; 63
+  50:	0f 92       	push	r0
+  52:	11 24       	eor	r1, r1
+  54:	8f 93       	push	r24
+    attribute = 0xFF; //????????? ??????? ?????? ?????
+  56:	8f ef       	ldi	r24, 0xFF	; 255
+  58:	80 93 60 00 	sts	0x0060, r24
+  }
+  5c:	8f 91       	pop	r24
+  5e:	0f 90       	pop	r0
+  60:	0f be       	out	0x3f, r0	; 63
+  62:	0f 90       	pop	r0
+  64:	1f 90       	pop	r1
+  66:	18 95       	reti
+
+00000068 <__vector_2>:
+
+//??????????? IRQ1 (?? ????? INT1)
+  ISR(INT1_vect){
+  68:	1f 92       	push	r1
+  6a:	0f 92       	push	r0
+  6c:	0f b6       	in	r0, 0x3f	; 63
+  6e:	0f 92       	push	r0
+  70:	11 24       	eor	r1, r1
+    attribute = 0x00; //????????? ??????? ?????? ????
+  72:	10 92 60 00 	sts	0x0060, r1
+  }
+  76:	0f 90       	pop	r0
+  78:	0f be       	out	0x3f, r0	; 63
+  7a:	0f 90       	pop	r0
+  7c:	1f 90       	pop	r1
+  7e:	18 95       	reti
+
+00000080 <main>:
+  volatile unsigned char* d = (unsigned char *) lcd_data;
+
+ 
+//????????? ????????????? ??????????
+
+  ACSR= 1<<ACD; 
+  80:	80 e8       	ldi	r24, 0x80	; 128
+  82:	88 b9       	out	0x08, r24	; 8
+//?????????? ?????? ?? ?????????? ???'???? ? ???????????? ???????? ???????????
+
+
+  MCUCR = 1 << SRE | 1<< ISC11 | 1<< ISC10 | 1<<ISC01 | 0<<ISC00;
+  84:	8e e8       	ldi	r24, 0x8E	; 142
+  86:	85 bf       	out	0x35, r24	; 53
+//???????????: INT1 ???????????? ?? ?????, ? INT0 - ?? ???????? ?????
+//?? ??????????? ??????? (???? 0, 1 (ISC00, ISC01) ?? 2, 3 (ISC10, ISC11) ???????)
+
+
+  GICR = 1 << INT0 | 1<<INT1;
+  88:	80 ec       	ldi	r24, 0xC0	; 192
+  8a:	8b bf       	out	0x3b, r24	; 59
+
+
+  *c = 0x38; //Function Set
+  8c:	88 e3       	ldi	r24, 0x38	; 56
+  8e:	80 93 04 80 	sts	0x8004, r24
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  92:	20 e0       	ldi	r18, 0x00	; 0
+  94:	38 e4       	ldi	r19, 0x48	; 72
+  96:	c9 01       	movw	r24, r18
+  98:	01 97       	sbiw	r24, 0x01	; 1
+  9a:	f1 f7       	brne	.-4      	; 0x98 <main+0x18>
+  _delay_ms (10); 
+  *c = 0x0E; //Display ON/OFF Control
+  9c:	8e e0       	ldi	r24, 0x0E	; 14
+  9e:	80 93 04 80 	sts	0x8004, r24
+  a2:	c9 01       	movw	r24, r18
+  a4:	01 97       	sbiw	r24, 0x01	; 1
+  a6:	f1 f7       	brne	.-4      	; 0xa4 <main+0x24>
+  _delay_ms (10); 
+
+  *c = 0x01; //Display clear first position first row
+  a8:	81 e0       	ldi	r24, 0x01	; 1
+  aa:	80 93 04 80 	sts	0x8004, r24
+  ae:	c9 01       	movw	r24, r18
+  b0:	01 97       	sbiw	r24, 0x01	; 1
+  b2:	f1 f7       	brne	.-4      	; 0xb0 <main+0x30>
+  _delay_ms (10); 
+
+  *c = 0x06; //Entry Mode Set
+  b4:	86 e0       	ldi	r24, 0x06	; 6
+  b6:	80 93 04 80 	sts	0x8004, r24
+  ba:	c9 01       	movw	r24, r18
+  bc:	01 97       	sbiw	r24, 0x01	; 1
+  be:	f1 f7       	brne	.-4      	; 0xbc <main+0x3c>
+  _delay_ms (10); 
+
+
+  sei();
+  c0:	78 94       	sei
+    	second_num =0x39;//????? ????? ????? 9
+    	first_num--;//????? ????????? ?? 1
+    }
+    else if(first_num == 0x30 & second_num == 0x30)//??? ????? ?? ??? ????? 0
+    {
+      third_num= 0x39; //??????? ??? ????? ?? 9
+  c2:	59 e3       	ldi	r21, 0x39	; 57
+    second_num =0x30;//????? ????? 0
+    first_num++;//??????? ?? ??????? ????? 1
+    }
+    else  if(second_num == 0x39 & first_num== 0x39)//???? ?? ???? ????? ?? ?????????? ? ????? ?? ????? ????? ???????? 9
+    {
+      third_num= 0x30;//??? ????? ?????????? ? 0
+  c4:	40 e3       	ldi	r20, 0x30	; 48
+  c6:	28 eb       	ldi	r18, 0xB8	; 184
+  c8:	30 e0       	ldi	r19, 0x00	; 0
+
+    *d = third_num;
+
+    _delay_ms(200);
+
+ 	 *c = 0b000000001; //cursor to home
+  ca:	a1 e0       	ldi	r26, 0x01	; 1
+  cc:	60 e0       	ldi	r22, 0x00	; 0
+  ce:	78 e4       	ldi	r23, 0x48	; 72
+
+  sei();
+
+  while(1) {
+//????????? ???????? ???????-?????? ?? ?????? ????????? ??? ?? ???????????
+    if(attribute== 0xFF) {  
+  d0:	80 91 60 00 	lds	r24, 0x0060
+  d4:	8f 3f       	cpi	r24, 0xFF	; 255
+  d6:	69 f5       	brne	.+90     	; 0x132 <main+0xb2>
+        
+      if(third_num < 0x39)//?????????? ?? ??????? ????? ????? 9
+  d8:	80 91 63 00 	lds	r24, 0x0063
+  dc:	89 33       	cpi	r24, 0x39	; 57
+  de:	20 f4       	brcc	.+8      	; 0xe8 <main+0x68>
+    {
+    third_num ++;//???? ???, ?? ??????? 1
+  e0:	80 91 63 00 	lds	r24, 0x0063
+  e4:	8f 5f       	subi	r24, 0xFF	; 255
+  e6:	2c c0       	rjmp	.+88     	; 0x140 <main+0xc0>
+    }
+    else if (second_num < 0x39)//??????????? ???? ????? ????? ????? 9-??
+  e8:	80 91 62 00 	lds	r24, 0x0062
+  ec:	89 33       	cpi	r24, 0x39	; 57
+  ee:	30 f4       	brcc	.+12     	; 0xfc <main+0x7c>
+    {
+    third_num= 0x30;//???? ??? ????? ????? ???? 0
+  f0:	40 93 63 00 	sts	0x0063, r20
+    second_num ++;//????? ????? ???????????? ?? 1
+  f4:	80 91 62 00 	lds	r24, 0x0062
+  f8:	8f 5f       	subi	r24, 0xFF	; 255
+  fa:	2e c0       	rjmp	.+92     	; 0x158 <main+0xd8>
+    }
+    else if (first_num < 0x39 ) //??????????? ???? ????? ????? ????? 9-??
+  fc:	80 91 61 00 	lds	r24, 0x0061
+ 100:	89 33       	cpi	r24, 0x39	; 57
+ 102:	40 f4       	brcc	.+16     	; 0x114 <main+0x94>
+
+    {
+    third_num= 0x30;//???? ??? ????? ????? 0
+ 104:	40 93 63 00 	sts	0x0063, r20
+    second_num =0x30;//????? ????? 0
+ 108:	40 93 62 00 	sts	0x0062, r20
+    first_num++;//??????? ?? ??????? ????? 1
+ 10c:	80 91 61 00 	lds	r24, 0x0061
+ 110:	8f 5f       	subi	r24, 0xFF	; 255
+ 112:	30 c0       	rjmp	.+96     	; 0x174 <main+0xf4>
+    }
+    else  if(second_num == 0x39 & first_num== 0x39)//???? ?? ???? ????? ?? ?????????? ? ????? ?? ????? ????? ???????? 9
+ 114:	80 91 62 00 	lds	r24, 0x0062
+ 118:	90 91 61 00 	lds	r25, 0x0061
+ 11c:	89 33       	cpi	r24, 0x39	; 57
+ 11e:	d9 f5       	brne	.+118    	; 0x196 <main+0x116>
+ 120:	99 33       	cpi	r25, 0x39	; 57
+ 122:	c9 f5       	brne	.+114    	; 0x196 <main+0x116>
+    {
+      third_num= 0x30;//??? ????? ?????????? ? 0
+ 124:	40 93 63 00 	sts	0x0063, r20
+    	second_num =0x30;
+ 128:	40 93 62 00 	sts	0x0062, r20
+    	first_num= 0x30;
+ 12c:	40 93 61 00 	sts	0x0061, r20
+ 130:	32 c0       	rjmp	.+100    	; 0x196 <main+0x116>
+    }
+      
+
+    } else {//???? ?? ????? ?? ?????? ???????
+
+    if(third_num > 0x30)//??????????? ???? ????? ????? ?????? 0
+ 132:	80 91 63 00 	lds	r24, 0x0063
+ 136:	81 33       	cpi	r24, 0x31	; 49
+ 138:	30 f0       	brcs	.+12     	; 0x146 <main+0xc6>
+    {
+    	third_num --;//???? ???, ?? ?????????? 1
+ 13a:	80 91 63 00 	lds	r24, 0x0063
+ 13e:	81 50       	subi	r24, 0x01	; 1
+ 140:	80 93 63 00 	sts	0x0063, r24
+ 144:	28 c0       	rjmp	.+80     	; 0x196 <main+0x116>
+    }
+    else if (second_num > 0x30)//???? ????? ?? ??????????, ??????????? ?? ????? ????? ?????? 0
+ 146:	80 91 62 00 	lds	r24, 0x0062
+ 14a:	81 33       	cpi	r24, 0x31	; 49
+ 14c:	40 f0       	brcs	.+16     	; 0x15e <main+0xde>
+    {
+    	third_num= 0x39;//???? ???, ???? ????? ????? ???? 9
+ 14e:	50 93 63 00 	sts	0x0063, r21
+    	second_num --;//?? ????????? ????? ?????
+ 152:	80 91 62 00 	lds	r24, 0x0062
+ 156:	81 50       	subi	r24, 0x01	; 1
+ 158:	80 93 62 00 	sts	0x0062, r24
+ 15c:	1c c0       	rjmp	.+56     	; 0x196 <main+0x116>
+    }
+    else if (first_num> 0x30 )//???? ? ????? ????? 0, ??????????? ?? ????? ????? 0
+ 15e:	80 91 61 00 	lds	r24, 0x0061
+ 162:	81 33       	cpi	r24, 0x31	; 49
+ 164:	50 f0       	brcs	.+20     	; 0x17a <main+0xfa>
+    {
+    	third_num= 0x39;//???? ???, ????? ????? ???? 9
+ 166:	50 93 63 00 	sts	0x0063, r21
+    	second_num =0x39;//????? ????? ????? 9
+ 16a:	50 93 62 00 	sts	0x0062, r21
+    	first_num--;//????? ????????? ?? 1
+ 16e:	80 91 61 00 	lds	r24, 0x0061
+ 172:	81 50       	subi	r24, 0x01	; 1
+ 174:	80 93 61 00 	sts	0x0061, r24
+ 178:	0e c0       	rjmp	.+28     	; 0x196 <main+0x116>
+    }
+    else if(first_num == 0x30 & second_num == 0x30)//??? ????? ?? ??? ????? 0
+ 17a:	80 91 61 00 	lds	r24, 0x0061
+ 17e:	90 91 62 00 	lds	r25, 0x0062
+ 182:	80 33       	cpi	r24, 0x30	; 48
+ 184:	41 f4       	brne	.+16     	; 0x196 <main+0x116>
+ 186:	90 33       	cpi	r25, 0x30	; 48
+ 188:	31 f4       	brne	.+12     	; 0x196 <main+0x116>
+    {
+      third_num= 0x39; //??????? ??? ????? ?? 9
+ 18a:	50 93 63 00 	sts	0x0063, r21
+    	second_num =0x39;
+ 18e:	50 93 62 00 	sts	0x0062, r21
+    	first_num= 0x39;
+ 192:	50 93 61 00 	sts	0x0061, r21
+            
+    }
+
+    
+    
+    *d = first_num;//???????? ????? ????? ?? ???
+ 196:	80 91 61 00 	lds	r24, 0x0061
+ 19a:	80 93 05 80 	sts	0x8005, r24
+ 19e:	80 ed       	ldi	r24, 0xD0	; 208
+ 1a0:	97 e0       	ldi	r25, 0x07	; 7
+ 1a2:	f9 01       	movw	r30, r18
+ 1a4:	31 97       	sbiw	r30, 0x01	; 1
+ 1a6:	f1 f7       	brne	.-4      	; 0x1a4 <main+0x124>
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1a8:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1aa:	d9 f7       	brne	.-10     	; 0x1a2 <main+0x122>
+
+    _delay_ms(200);
+
+    *d = second_num;
+ 1ac:	80 91 62 00 	lds	r24, 0x0062
+ 1b0:	80 93 05 80 	sts	0x8005, r24
+ 1b4:	80 ed       	ldi	r24, 0xD0	; 208
+ 1b6:	97 e0       	ldi	r25, 0x07	; 7
+ 1b8:	f9 01       	movw	r30, r18
+ 1ba:	31 97       	sbiw	r30, 0x01	; 1
+ 1bc:	f1 f7       	brne	.-4      	; 0x1ba <main+0x13a>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1be:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1c0:	d9 f7       	brne	.-10     	; 0x1b8 <main+0x138>
+
+    _delay_ms(200);
+
+    *d = third_num;
+ 1c2:	80 91 63 00 	lds	r24, 0x0063
+ 1c6:	80 93 05 80 	sts	0x8005, r24
+ 1ca:	80 ed       	ldi	r24, 0xD0	; 208
+ 1cc:	97 e0       	ldi	r25, 0x07	; 7
+ 1ce:	f9 01       	movw	r30, r18
+ 1d0:	31 97       	sbiw	r30, 0x01	; 1
+ 1d2:	f1 f7       	brne	.-4      	; 0x1d0 <main+0x150>
+		{
+			// wait 1/10 ms
+			_delay_loop_2(((F_CPU) / 4e3) / 10);
+			__ticks --;
+ 1d4:	01 97       	sbiw	r24, 0x01	; 1
+		__ticks = 1;
+	else if (__tmp > 65535)
+	{
+		//	__ticks = requested delay in 1/10 ms
+		__ticks = (uint16_t) (__ms * 10.0);
+		while(__ticks)
+ 1d6:	d9 f7       	brne	.-10     	; 0x1ce <main+0x14e>
+
+    _delay_ms(200);
+
+ 	 *c = 0b000000001; //cursor to home
+ 1d8:	a0 93 04 80 	sts	0x8004, r26
+ 1dc:	cb 01       	movw	r24, r22
+ 1de:	01 97       	sbiw	r24, 0x01	; 1
+ 1e0:	f1 f7       	brne	.-4      	; 0x1de <main+0x15e>
+ 1e2:	76 cf       	rjmp	.-276    	; 0xd0 <main+0x50>
+
+000001e4 <_exit>:
+ 1e4:	f8 94       	cli
+
+000001e6 <__stop_program>:
+ 1e6:	ff cf       	rjmp	.-2      	; 0x1e6 <__stop_program>

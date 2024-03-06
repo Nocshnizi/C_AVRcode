@@ -1,0 +1,413 @@
+
+EV8031AVR_RGR_Encoder_C.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000248  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         0000000a  00800060  00000248  000002dc  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000006  0080006a  0080006a  000002e6  2**0
+                  ALLOC
+  3 .debug_aranges 00000020  00000000  00000000  000002e6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  4 .debug_pubnames 000000be  00000000  00000000  00000306  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000353  00000000  00000000  000003c4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000011c  00000000  00000000  00000717  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000030d  00000000  00000000  00000833  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000030  00000000  00000000  00000b40  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000168  00000000  00000000  00000b70  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    000000c0  00000000  00000000  00000cd8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000048  00000000  00000000  00000d98  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	10 c0       	rjmp	.+32     	; 0x22 <__ctors_end>
+   2:	2a c0       	rjmp	.+84     	; 0x58 <__bad_interrupt>
+   4:	29 c0       	rjmp	.+82     	; 0x58 <__bad_interrupt>
+   6:	28 c0       	rjmp	.+80     	; 0x58 <__bad_interrupt>
+   8:	27 c0       	rjmp	.+78     	; 0x58 <__bad_interrupt>
+   a:	26 c0       	rjmp	.+76     	; 0x58 <__bad_interrupt>
+   c:	25 c0       	rjmp	.+74     	; 0x58 <__bad_interrupt>
+   e:	24 c0       	rjmp	.+72     	; 0x58 <__bad_interrupt>
+  10:	23 c0       	rjmp	.+70     	; 0x58 <__bad_interrupt>
+  12:	22 c0       	rjmp	.+68     	; 0x58 <__bad_interrupt>
+  14:	21 c0       	rjmp	.+66     	; 0x58 <__bad_interrupt>
+  16:	20 c0       	rjmp	.+64     	; 0x58 <__bad_interrupt>
+  18:	1f c0       	rjmp	.+62     	; 0x58 <__bad_interrupt>
+  1a:	1e c0       	rjmp	.+60     	; 0x58 <__bad_interrupt>
+  1c:	1e c0       	rjmp	.+60     	; 0x5a <__vector_14>
+  1e:	1c c0       	rjmp	.+56     	; 0x58 <__bad_interrupt>
+  20:	1b c0       	rjmp	.+54     	; 0x58 <__bad_interrupt>
+
+00000022 <__ctors_end>:
+  22:	11 24       	eor	r1, r1
+  24:	1f be       	out	0x3f, r1	; 63
+  26:	cf e5       	ldi	r28, 0x5F	; 95
+  28:	d2 e0       	ldi	r29, 0x02	; 2
+  2a:	de bf       	out	0x3e, r29	; 62
+  2c:	cd bf       	out	0x3d, r28	; 61
+
+0000002e <__do_copy_data>:
+  2e:	10 e0       	ldi	r17, 0x00	; 0
+  30:	a0 e6       	ldi	r26, 0x60	; 96
+  32:	b0 e0       	ldi	r27, 0x00	; 0
+  34:	e8 e4       	ldi	r30, 0x48	; 72
+  36:	f2 e0       	ldi	r31, 0x02	; 2
+  38:	02 c0       	rjmp	.+4      	; 0x3e <.do_copy_data_start>
+
+0000003a <.do_copy_data_loop>:
+  3a:	05 90       	lpm	r0, Z+
+  3c:	0d 92       	st	X+, r0
+
+0000003e <.do_copy_data_start>:
+  3e:	aa 36       	cpi	r26, 0x6A	; 106
+  40:	b1 07       	cpc	r27, r17
+  42:	d9 f7       	brne	.-10     	; 0x3a <.do_copy_data_loop>
+
+00000044 <__do_clear_bss>:
+  44:	10 e0       	ldi	r17, 0x00	; 0
+  46:	aa e6       	ldi	r26, 0x6A	; 106
+  48:	b0 e0       	ldi	r27, 0x00	; 0
+  4a:	01 c0       	rjmp	.+2      	; 0x4e <.do_clear_bss_start>
+
+0000004c <.do_clear_bss_loop>:
+  4c:	1d 92       	st	X+, r1
+
+0000004e <.do_clear_bss_start>:
+  4e:	a0 37       	cpi	r26, 0x70	; 112
+  50:	b1 07       	cpc	r27, r17
+  52:	e1 f7       	brne	.-8      	; 0x4c <.do_clear_bss_loop>
+  54:	16 d0       	rcall	.+44     	; 0x82 <main>
+  56:	f6 c0       	rjmp	.+492    	; 0x244 <_exit>
+
+00000058 <__bad_interrupt>:
+  58:	d3 cf       	rjmp	.-90     	; 0x0 <__vectors>
+
+0000005a <__vector_14>:
+
+
+
+
+
+ISR (TIMER0_COMP_vect) {
+  5a:	1f 92       	push	r1
+  5c:	0f 92       	push	r0
+  5e:	0f b6       	in	r0, 0x3f	; 63
+  60:	0f 92       	push	r0
+  62:	11 24       	eor	r1, r1
+  64:	8f 93       	push	r24
+  66:	9f 93       	push	r25
+      	permition = 1;
+  68:	81 e0       	ldi	r24, 0x01	; 1
+  6a:	90 e0       	ldi	r25, 0x00	; 0
+  6c:	90 93 6c 00 	sts	0x006C, r25
+  70:	80 93 6b 00 	sts	0x006B, r24
+  
+}
+  74:	9f 91       	pop	r25
+  76:	8f 91       	pop	r24
+  78:	0f 90       	pop	r0
+  7a:	0f be       	out	0x3f, r0	; 63
+  7c:	0f 90       	pop	r0
+  7e:	1f 90       	pop	r1
+  80:	18 95       	reti
+
+00000082 <main>:
+
+int main (void) {
+
+//  _delay_ms (1000);
+  ACSR = 1 << ACD;  
+  82:	80 e8       	ldi	r24, 0x80	; 128
+  84:	88 b9       	out	0x08, r24	; 8
+  MCUCR = 1 << SRE; 
+  86:	85 bf       	out	0x35, r24	; 53
+
+  TIMSK = 1 << OCIE0; 
+  88:	91 e0       	ldi	r25, 0x01	; 1
+  8a:	99 bf       	out	0x39, r25	; 57
+  OCR0 = 0x1D;
+  8c:	8d e1       	ldi	r24, 0x1D	; 29
+  8e:	81 bf       	out	0x31, r24	; 49
+        
+  SFIOR = 1 << PSR10;  
+  90:	90 bf       	out	0x30, r25	; 48
+ 
+  TCCR0 = 1 << WGM01 | 1 << CS02;
+  92:	8c e0       	ldi	r24, 0x0C	; 12
+  94:	83 bf       	out	0x33, r24	; 51
+
+	*c = 0x38; //Function Set
+  96:	e0 91 65 00 	lds	r30, 0x0065
+  9a:	f0 91 66 00 	lds	r31, 0x0066
+  9e:	88 e3       	ldi	r24, 0x38	; 56
+  a0:	80 83       	st	Z, r24
+    milliseconds can be achieved.
+ */
+void
+_delay_loop_2(uint16_t __count)
+{
+	__asm__ volatile (
+  a2:	20 e0       	ldi	r18, 0x00	; 0
+  a4:	38 e4       	ldi	r19, 0x48	; 72
+  a6:	f9 01       	movw	r30, r18
+  a8:	31 97       	sbiw	r30, 0x01	; 1
+  aa:	f1 f7       	brne	.-4      	; 0xa8 <main+0x26>
+    _delay_ms (10); 
+
+    *c = 0x0E; //Display ON/OFF Control
+  ac:	e0 91 65 00 	lds	r30, 0x0065
+  b0:	f0 91 66 00 	lds	r31, 0x0066
+  b4:	8e e0       	ldi	r24, 0x0E	; 14
+  b6:	80 83       	st	Z, r24
+  b8:	f9 01       	movw	r30, r18
+  ba:	31 97       	sbiw	r30, 0x01	; 1
+  bc:	f1 f7       	brne	.-4      	; 0xba <main+0x38>
+    _delay_ms (10); 
+
+    *c = 0x01; //Display clear
+  be:	e0 91 65 00 	lds	r30, 0x0065
+  c2:	f0 91 66 00 	lds	r31, 0x0066
+  c6:	90 83       	st	Z, r25
+  c8:	c9 01       	movw	r24, r18
+  ca:	01 97       	sbiw	r24, 0x01	; 1
+  cc:	f1 f7       	brne	.-4      	; 0xca <main+0x48>
+    _delay_ms (10); 
+
+    *c = 0x06; //Entry Mode Set
+  ce:	e0 91 65 00 	lds	r30, 0x0065
+  d2:	f0 91 66 00 	lds	r31, 0x0066
+  d6:	86 e0       	ldi	r24, 0x06	; 6
+  d8:	80 83       	st	Z, r24
+  da:	c9 01       	movw	r24, r18
+  dc:	01 97       	sbiw	r24, 0x01	; 1
+  de:	f1 f7       	brne	.-4      	; 0xdc <main+0x5a>
+    _delay_ms (10); 
+	*c = 0xC8;
+  e0:	e0 91 65 00 	lds	r30, 0x0065
+  e4:	f0 91 66 00 	lds	r31, 0x0066
+  e8:	88 ec       	ldi	r24, 0xC8	; 200
+  ea:	80 83       	st	Z, r24
+  ec:	c9 01       	movw	r24, r18
+  ee:	01 97       	sbiw	r24, 0x01	; 1
+  f0:	f1 f7       	brne	.-4      	; 0xee <main+0x6c>
+	_delay_ms (10);
+
+    last_encoder_state = PINB; 
+  f2:	86 b3       	in	r24, 0x16	; 22
+  f4:	80 93 6f 00 	sts	0x006F, r24
+    last_encoder_state &= 0b1001000;
+  f8:	80 91 6f 00 	lds	r24, 0x006F
+  fc:	88 74       	andi	r24, 0x48	; 72
+  fe:	80 93 6f 00 	sts	0x006F, r24
+
+     sei();
+ 102:	78 94       	sei
+	    temp &= 0b00100000; 
+
+
+
+		if (temp == 0x00) { 
+		      *c = 0x01;
+ 104:	a1 e0       	ldi	r26, 0x01	; 1
+ 106:	20 e0       	ldi	r18, 0x00	; 0
+ 108:	38 e4       	ldi	r19, 0x48	; 72
+		  
+		   
+		 } 
+		 
+		 if(againstCounter == 0){
+				againstCounter = 2;
+ 10a:	42 e0       	ldi	r20, 0x02	; 2
+ 10c:	50 e0       	ldi	r21, 0x00	; 0
+	        }
+	        if (next_encoder_state == 0b10000000) { 
+	          encoder_data++; 
+			  counter--;
+	          if(encoder_data > 'z'){
+	               encoder_data = 'a';
+ 10e:	71 e6       	ldi	r23, 0x61	; 97
+	  if(last_encoder_state == 0x00) { 
+	        if (next_encoder_state == 0b00010000) { 
+	          encoder_data--;
+			  againstCounter--;
+	          if(encoder_data < 'a'){
+	             encoder_data = 'z';
+ 110:	6a e7       	ldi	r22, 0x7A	; 122
+
+   
+     
+while(1){  
+
+	if(permition == 1){
+ 112:	80 91 6b 00 	lds	r24, 0x006B
+ 116:	90 91 6c 00 	lds	r25, 0x006C
+ 11a:	01 97       	sbiw	r24, 0x01	; 1
+ 11c:	d1 f7       	brne	.-12     	; 0x112 <main+0x90>
+	next_encoder_state = PINB; 
+ 11e:	86 b3       	in	r24, 0x16	; 22
+ 120:	80 93 6d 00 	sts	0x006D, r24
+    next_encoder_state &= 0b10010000; 
+ 124:	80 91 6d 00 	lds	r24, 0x006D
+ 128:	80 79       	andi	r24, 0x90	; 144
+ 12a:	80 93 6d 00 	sts	0x006D, r24
+	  if (next_encoder_state != last_encoder_state) { 	
+ 12e:	90 91 6d 00 	lds	r25, 0x006D
+ 132:	80 91 6f 00 	lds	r24, 0x006F
+ 136:	98 17       	cp	r25, r24
+ 138:	c1 f1       	breq	.+112    	; 0x1aa <main+0x128>
+		encoder_data = little_letter;
+ 13a:	80 91 64 00 	lds	r24, 0x0064
+ 13e:	80 93 6a 00 	sts	0x006A, r24
+	  if(last_encoder_state == 0x00) { 
+ 142:	80 91 6f 00 	lds	r24, 0x006F
+ 146:	88 23       	and	r24, r24
+ 148:	81 f5       	brne	.+96     	; 0x1aa <main+0x128>
+	        if (next_encoder_state == 0b00010000) { 
+ 14a:	80 91 6d 00 	lds	r24, 0x006D
+ 14e:	80 31       	cpi	r24, 0x10	; 16
+ 150:	a1 f4       	brne	.+40     	; 0x17a <main+0xf8>
+	          encoder_data--;
+ 152:	80 91 6a 00 	lds	r24, 0x006A
+ 156:	81 50       	subi	r24, 0x01	; 1
+ 158:	80 93 6a 00 	sts	0x006A, r24
+			  againstCounter--;
+ 15c:	80 91 62 00 	lds	r24, 0x0062
+ 160:	90 91 63 00 	lds	r25, 0x0063
+ 164:	01 97       	sbiw	r24, 0x01	; 1
+ 166:	90 93 63 00 	sts	0x0063, r25
+ 16a:	80 93 62 00 	sts	0x0062, r24
+	          if(encoder_data < 'a'){
+ 16e:	80 91 6a 00 	lds	r24, 0x006A
+ 172:	81 36       	cpi	r24, 0x61	; 97
+ 174:	10 f4       	brcc	.+4      	; 0x17a <main+0xf8>
+	             encoder_data = 'z';
+ 176:	60 93 6a 00 	sts	0x006A, r22
+				 
+	          }
+            
+	        }
+	        if (next_encoder_state == 0b10000000) { 
+ 17a:	80 91 6d 00 	lds	r24, 0x006D
+ 17e:	80 38       	cpi	r24, 0x80	; 128
+ 180:	a1 f4       	brne	.+40     	; 0x1aa <main+0x128>
+	          encoder_data++; 
+ 182:	80 91 6a 00 	lds	r24, 0x006A
+ 186:	8f 5f       	subi	r24, 0xFF	; 255
+ 188:	80 93 6a 00 	sts	0x006A, r24
+			  counter--;
+ 18c:	80 91 60 00 	lds	r24, 0x0060
+ 190:	90 91 61 00 	lds	r25, 0x0061
+ 194:	01 97       	sbiw	r24, 0x01	; 1
+ 196:	90 93 61 00 	sts	0x0061, r25
+ 19a:	80 93 60 00 	sts	0x0060, r24
+	          if(encoder_data > 'z'){
+ 19e:	80 91 6a 00 	lds	r24, 0x006A
+ 1a2:	8b 37       	cpi	r24, 0x7B	; 123
+ 1a4:	10 f0       	brcs	.+4      	; 0x1aa <main+0x128>
+	               encoder_data = 'a';
+ 1a6:	70 93 6a 00 	sts	0x006A, r23
+	  
+	  	}	  
+		
+
+
+		if(counter == 0){
+ 1aa:	80 91 60 00 	lds	r24, 0x0060
+ 1ae:	90 91 61 00 	lds	r25, 0x0061
+ 1b2:	89 2b       	or	r24, r25
+ 1b4:	91 f4       	brne	.+36     	; 0x1da <main+0x158>
+	      counter = 2;
+ 1b6:	50 93 61 00 	sts	0x0061, r21
+ 1ba:	40 93 60 00 	sts	0x0060, r20
+	      little_letter = encoder_data;
+ 1be:	80 91 6a 00 	lds	r24, 0x006A
+ 1c2:	80 93 64 00 	sts	0x0064, r24
+
+
+	      *d = little_letter;
+ 1c6:	e0 91 67 00 	lds	r30, 0x0067
+ 1ca:	f0 91 68 00 	lds	r31, 0x0068
+ 1ce:	80 91 64 00 	lds	r24, 0x0064
+ 1d2:	80 83       	st	Z, r24
+ 1d4:	c9 01       	movw	r24, r18
+ 1d6:	01 97       	sbiw	r24, 0x01	; 1
+ 1d8:	f1 f7       	brne	.-4      	; 0x1d6 <main+0x154>
+	      _delay_ms (10);
+		  
+		   
+		 } 
+		 
+		 if(againstCounter == 0){
+ 1da:	80 91 62 00 	lds	r24, 0x0062
+ 1de:	90 91 63 00 	lds	r25, 0x0063
+ 1e2:	89 2b       	or	r24, r25
+ 1e4:	91 f4       	brne	.+36     	; 0x20a <main+0x188>
+				againstCounter = 2;
+ 1e6:	50 93 63 00 	sts	0x0063, r21
+ 1ea:	40 93 62 00 	sts	0x0062, r20
+				  little_letter = encoder_data;
+ 1ee:	80 91 6a 00 	lds	r24, 0x006A
+ 1f2:	80 93 64 00 	sts	0x0064, r24
+
+
+	      *d = little_letter;
+ 1f6:	e0 91 67 00 	lds	r30, 0x0067
+ 1fa:	f0 91 68 00 	lds	r31, 0x0068
+ 1fe:	80 91 64 00 	lds	r24, 0x0064
+ 202:	80 83       	st	Z, r24
+ 204:	c9 01       	movw	r24, r18
+ 206:	01 97       	sbiw	r24, 0x01	; 1
+ 208:	f1 f7       	brne	.-4      	; 0x206 <main+0x184>
+	       _delay_ms (10);
+
+		 }
+	     
+	    temp = PINB; 
+ 20a:	86 b3       	in	r24, 0x16	; 22
+ 20c:	80 93 6e 00 	sts	0x006E, r24
+	    temp &= 0b00100000; 
+ 210:	80 91 6e 00 	lds	r24, 0x006E
+ 214:	80 72       	andi	r24, 0x20	; 32
+ 216:	80 93 6e 00 	sts	0x006E, r24
+
+
+
+		if (temp == 0x00) { 
+ 21a:	80 91 6e 00 	lds	r24, 0x006E
+ 21e:	88 23       	and	r24, r24
+ 220:	41 f4       	brne	.+16     	; 0x232 <main+0x1b0>
+		      *c = 0x01;
+ 222:	e0 91 65 00 	lds	r30, 0x0065
+ 226:	f0 91 66 00 	lds	r31, 0x0066
+ 22a:	a0 83       	st	Z, r26
+ 22c:	c9 01       	movw	r24, r18
+ 22e:	01 97       	sbiw	r24, 0x01	; 1
+ 230:	f1 f7       	brne	.-4      	; 0x22e <main+0x1ac>
+		      _delay_ms (10);
+		 }
+
+		  permition = 0;
+ 232:	10 92 6c 00 	sts	0x006C, r1
+ 236:	10 92 6b 00 	sts	0x006B, r1
+		   
+		  last_encoder_state = next_encoder_state;
+ 23a:	80 91 6d 00 	lds	r24, 0x006D
+ 23e:	80 93 6f 00 	sts	0x006F, r24
+ 242:	67 cf       	rjmp	.-306    	; 0x112 <main+0x90>
+
+00000244 <_exit>:
+ 244:	f8 94       	cli
+
+00000246 <__stop_program>:
+ 246:	ff cf       	rjmp	.-2      	; 0x246 <__stop_program>
